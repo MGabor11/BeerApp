@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">BeerApp</string>
+
+    <!--Toolbar titles-->
+    <string name="home_page">Beer list</string>
+    <string name="detail_page">Beer detail</string>
+
+    <!--Detail page-->
+    <string name="name_info">Selected beer: %1$s</string>
+    <string name="description_info">Description: %1$s</string>
+</resources>
