@@ -1,5 +1,5 @@
 package com.example.beerapp.network
 
 interface BeerRemoteService {
-    suspend fun fetchBeers() :List<BeerResponse>
+    suspend fun fetchBeers(page: Int): List<BeerResponse>
 }

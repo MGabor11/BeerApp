@@ -5,6 +5,9 @@
     <string name="home_page">Beer list</string>
     <string name="detail_page">Beer detail</string>
 
+    <!--Beer list-->
+    <string name="scroll_to_the_top">Scroll to the top</string>
+
     <!--Detail page-->
     <string name="name_info">Selected beer: %1$s</string>
     <string name="description_info">Description: %1$s</string>

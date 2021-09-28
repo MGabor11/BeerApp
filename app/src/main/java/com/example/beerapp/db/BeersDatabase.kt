@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import kotlinx.coroutines.flow.Flow
+import androidx.lifecycle.LiveData
+
 
 @Database(entities = [BeerDataModel::class], version = 1)
 abstract class BeersDatabase : RoomDatabase() {
@@ -22,6 +24,9 @@ interface BeerDao {
 
     @Query("SELECT * FROM beer WHERE id = :beerId")
     fun getBeer(beerId: String): Flow<BeerDataModel>
+
+    @Query("SELECT COUNT(*) FROM beer")
+    fun getCount(): Flow<Int>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(items: List<BeerDataModel>)
