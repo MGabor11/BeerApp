@@ -8,6 +8,6 @@ class BeerRemoteServiceImpl @Inject constructor(
     private val beerApiService: BeerApiService
 ) : BeerRemoteService {
 
-    override suspend fun fetchBeers(): List<BeerResponse> =
-        beerApiService.getBeers().body() ?: emptyList()
+    override suspend fun fetchBeers(page: Int): List<BeerResponse> =
+        beerApiService.getBeersByPage(page).body() ?: emptyList()
 }

@@ -9,6 +9,12 @@ import com.example.beerapp.util.collectAsStateInLifecycle
 fun HomeScreen(onBeerSelected: (String) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
 
     val beerList by viewModel.beers.collectAsStateInLifecycle()
+    val isNextPageLoading by viewModel.isNextPageLoading.collectAsStateInLifecycle()
 
-    BeerList(beerList = beerList, onBeerSelected = onBeerSelected)
+    BeerList(
+        beerList = beerList,
+        isNextPageLoading = isNextPageLoading,
+        onBeerSelected = onBeerSelected,
+        onNeedToLoadNewBeers = { viewModel.fetchBeers() }
+    )
 }

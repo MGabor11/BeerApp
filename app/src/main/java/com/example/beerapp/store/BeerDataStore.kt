@@ -7,4 +7,5 @@ interface BeerDataStore {
     fun saveBeers(list: List<BeerDataModel>)
     fun getBeer(beerId: String): Flow<BeerDataModel>
     fun getBeers(): Flow<List<BeerDataModel>>
+    fun hasBeers(): Flow<Boolean>
 }
