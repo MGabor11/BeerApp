@@ -7,6 +7,7 @@ import com.example.beerapp.store.BeerDataStore
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
@@ -28,6 +29,10 @@ class BeerRepositoryImpl @Inject constructor(
             Beer(it.id, it.name, it.description, it.imageUrl)
         }
         .flowOn(Dispatchers.IO)
+
+    override fun getBeerDetailedInfo(beerId: String): Flow<Beer> {
+        TODO("Not yet implemented")
+    }
 
     override fun getBeers() = beerDataStore.getBeers()
         .map { list ->
