@@ -40,7 +40,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
-        kotlinCompilerVersion '1.5.21'
+        kotlinCompilerVersion '1.5.31'
     }
     packagingOptions {
         resources {
@@ -77,19 +77,19 @@ dependencies {
     "androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02"
 
     // Navigation
-    implementation "androidx.navigation:navigation-compose:2.4.0-alpha09"
+    implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
 
     // Coil
     implementation "io.coil-kt:coil-compose:1.3.2"
 
     // Lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-rc01"
 
     //Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.2"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
 
@@ -97,7 +97,7 @@ dependencies {
     implementation "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-rc01"
 
     //Hilt for di
     implementation "com.google.dagger:hilt-android:$daggerHiltVersion"

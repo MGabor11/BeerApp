@@ -9,7 +9,8 @@ class BeerRemoteServiceImpl @Inject constructor(
 ) : BeerRemoteService {
 
     override suspend fun getBeer(beerId: String): BeerDetailResponse =
-       beerApiService.getBeer(beerId).body() ?: BeerDetailResponse("","","","")
+        beerApiService.getBeer(beerId).body()?.first()
+            ?: BeerDetailResponse("", "", "", "", 0f, 0f, emptyList())
 
     override suspend fun fetchBeers(page: Int): List<BeerSimpleResponse> =
         beerApiService.getBeersByPage(page).body() ?: emptyList()

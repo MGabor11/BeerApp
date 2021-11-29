@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface BeerApiService {
 
     @GET("beers/{beerId}")
-    suspend fun getBeer(@Path("beerId") beerId: String): Response<BeerDetailResponse>
+    suspend fun getBeer(@Path("beerId") beerId: String): Response<List<BeerDetailResponse>>
 
     @GET("beers")
     suspend fun getBeersByPage(

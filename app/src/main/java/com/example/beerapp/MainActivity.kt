@@ -1,6 +1,7 @@
 package com.example.beerapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -27,9 +28,9 @@ import com.example.beerapp.ui.home.HomeScreen
 import com.example.beerapp.ui.navigation.LoaderState
 import com.example.beerapp.ui.navigation.LoaderViewModel
 import com.example.beerapp.ui.navigation.LoadingScreen
+import com.example.beerapp.ui.navigation.composableWithLoading
 import com.example.beerapp.ui.theme.BeerAppTheme
 import com.example.beerapp.ui.theme.Teal200
-import com.example.beerapp.ui.navigation.composableWithLoading
 import com.google.accompanist.insets.ProvideWindowInsets
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
                 ProvideWindowInsets {
                     val navController = rememberNavController()
 
+                    var currentBeerSelection by remember { mutableStateOf("") }
                     var toolbarTitle by remember { mutableStateOf("") }
                     var showNavBackArrow by remember { mutableStateOf(false) }
 
@@ -77,27 +79,33 @@ class MainActivity : ComponentActivity() {
                                 HomeScreen(
                                     onBeerSelected = { beerId ->
                                         navController.navigate("${BEER_DETAIL_ROUTE}/$beerId")
+                                        currentBeerSelection = ""
+                                        toolbarTitle = ""
                                     }
                                 )
                             }
-                            composable(
+                            composableWithLoading(
                                 route = "${BEER_DETAIL_ROUTE}/{$BEER_ID_KEY}",
                                 arguments = listOf(navArgument(BEER_ID_KEY) {
                                     type = NavType.StringType
                                 })
                             ) { backStackEntry ->
-                                toolbarTitle = stringResource(R.string.detail_page)
                                 showNavBackArrow = true
+                                toolbarTitle = currentBeerSelection
 
                                 val arguments = requireNotNull(backStackEntry.arguments)
                                 val beerId = arguments.getString(BEER_ID_KEY) ?: ""
                                 DetailScreen(
-                                    beerId = beerId
+                                    beerId = beerId,
+                                    onToolbarTitleFetched = { title ->
+                                        currentBeerSelection = title
+                                    }
                                 )
                             }
                         }
                     }
 
+                    // TODO .collectAsStateInLifecycle() ?
                     val loaderState by loaderViewModel.fullScreenLoader.state.collectAsState()
 
                     if (loaderState == LoaderState.SHOW) {

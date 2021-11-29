@@ -14,7 +14,10 @@ fun HomeScreen(onBeerSelected: (String) -> Unit, viewModel: HomeViewModel = hilt
     BeerList(
         beerList = beerList,
         isNextPageLoading = isNextPageLoading,
-        onBeerSelected = onBeerSelected,
+        onBeerSelected = { beerId ->
+            viewModel.selectBeer(beerId = beerId)
+            onBeerSelected.invoke(beerId)
+        },
         onNeedToLoadNewBeers = { viewModel.fetchBeers() }
     )
 }

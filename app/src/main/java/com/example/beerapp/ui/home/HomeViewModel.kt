@@ -52,5 +52,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun selectBeer(beerId: String) = viewModelScope.launchOnDefault {
+        beerRepository.setSelectedBeerId(beerId = beerId)
+    }
+
     private suspend fun getNextPage() = currentPage.first() + 1
 }

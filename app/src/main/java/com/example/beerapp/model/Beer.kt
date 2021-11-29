@@ -1,8 +1,8 @@
 package com.example.beerapp.model
 
 data class Beer(
-    val id: String,
-    val name: String,
-    val description: String,
-    val imageUrl: String
-)
+    override val id: String,
+    override val name: String,
+    override val description: String,
+    override val imageUrl: String
+) : BeerCommon

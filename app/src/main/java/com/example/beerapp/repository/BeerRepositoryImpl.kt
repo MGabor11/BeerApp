@@ -2,12 +2,15 @@ package com.example.beerapp.repository
 
 import com.example.beerapp.db.BeerDataModel
 import com.example.beerapp.model.Beer
+import com.example.beerapp.model.BeerDetail
 import com.example.beerapp.network.BeerRemoteService
 import com.example.beerapp.store.BeerDataStore
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
@@ -24,15 +27,34 @@ class BeerRepositoryImpl @Inject constructor(
         })
     }
 
+    override suspend fun setSelectedBeerId(beerId: String) = beerDataStore.setSelectedBeerId(beerId)
+
     override fun getBeer(beerId: String) = beerDataStore.getBeer(beerId)
         .map {
             Beer(it.id, it.name, it.description, it.imageUrl)
         }
         .flowOn(Dispatchers.IO)
 
-    override fun getBeerDetailedInfo(beerId: String): Flow<Beer> {
-        TODO("Not yet implemented")
-    }
+    override fun getSelectedBeer() = beerDataStore.getSelectedBeerId()
+        .filter { it.isNotEmpty() }
+        .flatMapLatest { beerId ->
+            getBeer(beerId = beerId)
+        }.flowOn(Dispatchers.IO)
+
+    override fun getBeerDetailedInfo(beerId: String) = flow {
+        val beerResponse = beerRemoteService.getBeer(beerId)
+        val beer = BeerDetail(
+            beerResponse.id,
+            beerResponse.name,
+            beerResponse.description,
+            beerResponse.imageUrl,
+            beerResponse.ibu,
+            beerResponse.ph,
+            beerResponse.foodPairing
+        )
+
+        emit(beer)
+    }.flowOn(Dispatchers.IO)
 
     override fun getBeers() = beerDataStore.getBeers()
         .map { list ->

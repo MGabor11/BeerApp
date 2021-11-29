@@ -11,4 +11,7 @@
     <!--Detail page-->
     <string name="name_info">Selected beer: %1$s</string>
     <string name="description_info">Description: %1$s</string>
+    <string name="ibu_info">IBU: %1$s</string>
+    <string name="ph_info">PH: %1$s</string>
+    <string name="food_info">Recommended foods:</string>
 </resources>
