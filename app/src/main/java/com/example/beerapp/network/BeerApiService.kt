@@ -16,4 +16,10 @@ interface BeerApiService {
         @Query("page") page: Int,
         @Query("per_page") resultPerPage: Int = Constants.BEER_PER_PAGE
     ): Response<List<BeerSimpleResponse>>
+
+    @GET("beers")
+    suspend fun getBeersByPageForPaging(
+        @Query("page") page: Int,
+        @Query("per_page") resultPerPage: Int = Constants.BEER_PER_PAGE
+    ): Response<BeerSimpleResponse>
 }

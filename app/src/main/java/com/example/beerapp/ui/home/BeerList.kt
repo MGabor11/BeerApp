@@ -32,74 +32,18 @@ import kotlinx.coroutines.launch
 @Composable
 fun BeerList(
     beerList: List<Beer>,
-    isNextPageLoading: Boolean,
-    onBeerSelected: (String) -> Unit,
-    onNeedToLoadNewBeers: () -> Unit
+    onBeerSelected: (String) -> Unit
 ) {
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-
-    val isFirstItemNotVisibleFlow = snapshotFlow {
-        listState.firstVisibleItemIndex
-    }
-        .map {
-            it > 0
-        }
-        .distinctUntilChanged()
-
-    val isListReachedTheEndFlow = snapshotFlow { listState.isScrolledToTheEnd(3) }
-        .distinctUntilChanged()
-
-    var showButton by remember { mutableStateOf(false) }
-
-    LaunchedEffect(listState, isNextPageLoading) {
-        combine(
-            isListReachedTheEndFlow,
-            isFirstItemNotVisibleFlow
-        ) { isListReachedTheEnd, isFirstItemNotVisible ->
-            isListReachedTheEnd to isFirstItemNotVisible
-        }
-            .collect { (isListReachedTheEnd, isFirstItemNotVisible) ->
-                if (isListReachedTheEnd && !isNextPageLoading && listState.layoutInfo.totalItemsCount > 0) {
-                    onNeedToLoadNewBeers()
-                    showButton = false
-                } else showButton = isFirstItemNotVisible && !isListReachedTheEnd
-            }
-    }
-
     Box {
-        LazyColumn(state = listState) {
+        LazyColumn {
             items(beerList) { beer ->
                 BeerItem(beer, onBeerSelected)
             }
         }
-
-        if (showButton) {
-            Button(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 16.dp),
-                onClick = {
-                    coroutineScope.launch {
-                        // Animate scroll to the first item
-                        listState.animateScrollToItem(index = 0)
-                    }
-                }
-            ) {
-                Text(stringResource(R.string.scroll_to_the_top))
-            }
-        }
-
-        if (isNextPageLoading && !showButton) {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 16.dp)
-            )
-        }
     }
 }
 
+/*
 fun LazyListState.isScrolledToTheEnd(belowTheLastIndex: Int = 0) =
     layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 >=
-            (layoutInfo.totalItemsCount - 1 - belowTheLastIndex)
+            (layoutInfo.totalItemsCount - 1 - belowTheLastIndex)*/

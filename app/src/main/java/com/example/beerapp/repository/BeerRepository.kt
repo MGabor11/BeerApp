@@ -12,4 +12,6 @@ interface BeerRepository {
     fun getBeerDetailedInfo(beerId: String): Flow<BeerDetail>
     fun getBeers(): Flow<List<Beer>>
     fun hasBeers(): Flow<Boolean>
+
+    fun getBeersByPageForPaging(page: Int): List<Beer>
 }

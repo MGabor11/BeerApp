@@ -64,4 +64,8 @@ class BeerRepositoryImpl @Inject constructor(
 
     override fun hasBeers() = beerDataStore.hasBeers()
         .flowOn(Dispatchers.IO)
+
+    override fun getBeersByPageForPaging(page: Int) : List<Beer>{
+
+    }
 }
