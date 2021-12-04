@@ -15,7 +15,6 @@ class BeerRemoteServiceImpl @Inject constructor(
     override suspend fun fetchBeers(page: Int): List<BeerSimpleResponse> =
         beerApiService.getBeersByPage(page).body() ?: emptyList()
 
-    override suspend fun getBeersByPageForPaging(page: Int): List<BeerSimpleResponse> {
-
-    }
+    override suspend fun getBeersByPageForPaging(page: Int): List<BeerSimpleResponse> =
+        beerApiService.getBeersByPageForPaging(page = page).body() ?: emptyList()
 }

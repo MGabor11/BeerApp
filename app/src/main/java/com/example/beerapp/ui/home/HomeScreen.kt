@@ -8,16 +8,11 @@ import com.example.beerapp.util.collectAsStateInLifecycle
 @Composable
 fun HomeScreen(onBeerSelected: (String) -> Unit, viewModel: HomeViewModel = hiltViewModel()) {
 
-    val beerList by viewModel.beers.collectAsStateInLifecycle()
-    val isNextPageLoading by viewModel.isNextPageLoading.collectAsStateInLifecycle()
-
     BeerList(
-        beerList = beerList,
-        /*isNextPageLoading = isNextPageLoading,*/
+        beerList = viewModel.beerFlow,
         onBeerSelected = { beerId ->
-            viewModel.selectBeer(beerId = beerId)
+            //viewModel.selectBeer(beerId = beerId)
             onBeerSelected.invoke(beerId)
-        }/*,
-        onNeedToLoadNewBeers = { viewModel.fetchBeers() }*/
+        }
     )
 }

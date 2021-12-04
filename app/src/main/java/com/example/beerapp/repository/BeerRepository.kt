@@ -13,5 +13,5 @@ interface BeerRepository {
     fun getBeers(): Flow<List<Beer>>
     fun hasBeers(): Flow<Boolean>
 
-    fun getBeersByPageForPaging(page: Int): List<Beer>
+    suspend fun getBeersByPageForPaging(page: Int): List<Beer>
 }

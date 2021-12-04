@@ -65,7 +65,10 @@ class BeerRepositoryImpl @Inject constructor(
     override fun hasBeers() = beerDataStore.hasBeers()
         .flowOn(Dispatchers.IO)
 
-    override fun getBeersByPageForPaging(page: Int) : List<Beer>{
-
+    override suspend fun getBeersByPageForPaging(page: Int): List<Beer> {
+        val beerListNetworkResponse = beerRemoteService.getBeersByPageForPaging(page)
+        return beerListNetworkResponse.map {
+            Beer(it.id, it.name, it.description, it.imageUrl)
+        }
     }
 }

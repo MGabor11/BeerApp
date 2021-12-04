@@ -1,22 +1,27 @@
 package com.example.beerapp.ui.home
 
-import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.beerapp.Constants
-import com.example.beerapp.repository.BeerRepository
+import com.example.beerapp.model.Beer
 import com.example.beerapp.ui.BaseViewModel
-import com.example.beerapp.util.launchOnDefault
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val beerRepository: BeerRepository
+    private val beerSource: BeerSource
 ) : BaseViewModel() {
 
-    private val beerFlow = beerRepository.getBeers()
+    val beerFlow : Flow<PagingData<Beer>> = Pager(PagingConfig(Constants.BEER_PER_PAGE)) {
+        beerSource
+    }.flow
+
+    /*val beers = beerFlow.asStateFlow(null)*/
+
+    /*private val beerFlow = beerRepository.getBeers()
     private val beerCountFlow = beerFlow.map { it.size }
     private val currentPage = beerCountFlow.map {
         (it.toDouble() / Constants.BEER_PER_PAGE).toInt()
@@ -56,5 +61,5 @@ class HomeViewModel @Inject constructor(
         beerRepository.setSelectedBeerId(beerId = beerId)
     }
 
-    private suspend fun getNextPage() = currentPage.first() + 1
+    private suspend fun getNextPage() = currentPage.first() + 1*/
 }
