@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import androidx.lifecycle.LiveData
 
 
-@Database(entities = [BeerDataModel::class], version = 1)
+@Database(entities = [BeerDataModel::class], version = 1, exportSchema = false)
 abstract class BeersDatabase : RoomDatabase() {
 
     abstract fun beerDao(): BeerDao

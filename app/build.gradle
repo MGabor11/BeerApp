@@ -112,4 +112,7 @@ dependencies {
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    // Widget
+    implementation "androidx.glance:glance-appwidget:1.0.0-alpha04"
 }
